@@ -1,0 +1,70 @@
+.btn__custom {
+    color: #000;
+  
+    padding: 10px 25px;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    border-radius: 1.5rem;
+}
+
+
+.btn__anim--red {
+    color: #ff0000;
+    border: 1px solid#ff0000;
+    box-shadow: 0 0 5px #ff0000, 0 0 5px #ff0000 inset;
+    z-index: 1;
+    border-radius: 1.5rem;
+}
+
+.btn__anim--red:after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 100%;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    background: #ff0000;
+    box-shadow:
+        0 0 20px #ff0000;
+    transition: all 0.3s ease;
+    border-radius: 1.5rem;
+}
+
+.btn__anim--red:hover {
+    color: #000;
+}
+
+.btn__anim--red:hover:after {
+    left: 0;
+    width: 100%;
+}
+
+.btn__anim--red:active {
+    top: 2px;
+}
+.btn__anim--red>svg {
+    color: #ff0000;
+    fill: #ff0000;
+}
+.btn__anim--red>svg:hover {
+    color: #000 !important ;
+    fill: #000 !important ;
+}
+.btn__anim--red:hover > svg {
+    color: #000 !important ;
+    fill: #000 !important ;
+}
+.arrow-right {
+    animation: bounce 1600ms infinite cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    /* margin-left: .5rem; */
+}
+@keyframes bounce {
+    50% {
+        transform: translatex(15px);
+      }
+    }

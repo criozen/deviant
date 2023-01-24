@@ -1,0 +1,648 @@
+<app-navbar></app-navbar>
+<div
+    class="flex flex-col min-h-screen inset-x-0 w-full px-8 md:px-12 py-24 md:py-28 lg:py-28 relative justify-center items-center z-10 flex-1 space-y-8">
+
+    <!--BEGIN: MOBILE DIV -->
+    <div class="lg:hidden absolute top-32 h-screen grid grid-cols-12 gap-4 w-full justify-between items-star">
+        <div class="col-span-12">
+            <div
+                class="w-full right-6 lg:max-w-[330px] lg:space-y-6 flex justify-start items-start md:flex-none relative overflow-x-scroll">
+                <!-- <div *ngIf="!isMetamaskConnected"
+                    class="bg__gradient--black w-[300px] p-5 rounded-2xl absolute mr-6 left-12 top-0">
+                    <h2 class=" font-bold text-sm lg:text-base text-white font-sans pb-2">Connect MetaMask first</h2>
+                    <p class=" font-normal text-sm text-white font-sans "></p>
+                </div> -->
+                <div *ngIf="!goldListed && !diamondListed"
+                    class="bg__gradient--black w-[300px] p-5 rounded-2xl absolute mr-6 left-12 top-0">
+                    <h2 class=" font-bold text-sm lg:text-base text-white font-sans pb-2">Unfortunately</h2>
+                    <p class=" font-normal text-sm text-white font-sans ">You have not been whitelisted! Come back at
+                        1pm
+                        UTC
+                        for the public mint!</p>
+                </div>
+                <div *ngIf="goldListed && !diamondListed"
+                    class="bg__gradient--black w-[300px] p-5 rounded-2xl absolute mr-6 left-12 top-0">
+                    <h2 class=" font-bold text-sm lg:text-base text-white font-sans pb-2">Congratulations!</h2>
+                    <p class=" font-normal text-sm text-white font-sans ">You are in Gold List!</p>
+                </div>
+
+                <div *ngIf="diamondListed "
+                    class="bg__gradient--black w-[300px] p-5 rounded-2xl absolute mr-6 left-12 top-0">
+
+                    <h2 class=" font-bold text-sm lg:text-base text-white font-sans pb-2">Congratulations!!!!</h2>
+                    <p class=" font-normal text-sm text-white font-sans ">You are DiamondListed
+                    </p>
+                </div>
+                <div class="bg-[#000] p-5 rounded-2xl absolute left-[23rem] w-80 mr-6 top-0">
+                    <h2 class=" font-bold text-sm lg:text-base text-white font-sans pb-2">NFT Mint Price</h2>
+                    <div class="flex justify-between items-center">
+                        <div class="flex flex-col">
+                            <div class="font-bold text-white font-sans mb-1">AL Pass</div>
+                            <div class="font-bold flex items-end mb-1">
+                                <div class="mr-2 text-white font-sans">0.06 ETH</div>
+                                <div class="text-xs font-normal text-white font-sans">~$73.038</div>
+                            </div>
+                            <div class="flex items-center mb-1">
+                                <img src="assets/icons/slanting-arrow.svg" alt="">
+                                <div class="text-[#ff3838] text-xs font-normal pl-2">4.43% last week</div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="font-bold text-white font-sans mb-1">Public Pass</div>
+                            <div class="font-bold flex items-end mb-1">
+                                <div class="mr-2 text-white font-sans">0.08 ETH</div>
+                                <div class="text-xs font-normal text-white font-sans">~$97.384</div>
+                            </div>
+                            <div class="flex mb-1">
+                                <img src="assets/icons/slanting-arrow.svg" alt="">
+                                <div class="text-[#ff3838] text-xs font-normal pl-2">8.01% last week</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a target="_blank" class="block"
+                    href="https://astranovaofficial.medium.com/the-deviants-mint-pass-event-explained-jan-14th-jan-18th-3227e1c208aa">
+                    <div class="bg-[#000] rounded-2xl bg-cover h-40 absolute left-[48rem] top-0"
+                        style="background-image: url('../../assets/images/scene.jpg');">
+                    </div>
+                </a>
+                <a target="_blank" class="block"
+                    href="https://astranovaofficial.medium.com/the-deviants-mint-pass-event-explained-jan-14th-jan-18th-3227e1c208aa">
+                    <div class="bg-[#000] rounded-2xl bg-cover h-40"
+                        style="background-image: url('../../assets/images/mint-pass.jpg');">
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-span-12 py-4 md:py-0 space-y-6">
+            <div class="max-w-[250px] mx-auto">
+                <div class="grid grid-cols-12 gap-4">
+                    <div class="col-span-3 mx-auto">
+                        <h2
+                            class="text-lg flex justify-center items-center bg-white rounded-lg text-black  font-bold mb-2 w-14 h-14">
+                            {{times.days}}</h2>
+                        <p class="text-secondary text-center text-sm lg:text-base text-white font-sans font-semibold">
+                            Days</p>
+                    </div>
+                    <div class="col-span-3 mx-auto">
+                        <h2
+                            class="text-lg flex justify-center items-center bg-white rounded-lg text-black  font-bold mb-2 w-14 h-14">
+                            {{times.hours}} </h2>
+                        <p class="text-secondary text-center text-sm lg:text-base text-white font-sans font-semibold">
+                            Hours</p>
+                    </div>
+                    <div class="col-span-3 mx-auto">
+                        <h2
+                            class="text-lg flex justify-center items-center bg-white rounded-lg text-black  font-bold mb-2 w-14 h-14">
+                            {{times.minutes}}</h2>
+                        <p class="text-secondary text-center text-sm text-white font-sans font-semibold">Mins
+                        </p>
+                    </div>
+                    <div class="col-span-3 mx-auto">
+                        <h2
+                            class="text-lg flex justify-center items-center bg-white rounded-lg text-black  font-bold mb-2 w-14 h-14">
+                            {{times.second}}</h2>
+                        <p class="text-secondary text-center text-sm text-white font-sans font-semibold">
+                            Seconds</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-white font-sans text-sm text-center font-medium">
+                Remaining <span class="text-white font-sans text-2xl font-bold">{{contractDetails?.totalDiamondPurchased
+                    + contractDetails?.totalGoldPurchased + contractDetails?.totalSilverPurchased}}/8000</span>
+            </div>
+            <div class="flex items-start justify-center">
+                <input checked id="checked-checkbox" type="checkbox" value=""
+                    class="accent-[#ff3838] rounded-full w-5 h-5 text-[#ff3838] bg-[#ff3838] border-gray-300 focus:ring-[#ff3838] focus:ring-2">
+                <label for="checked-checkbox" class="ml-2 text-sm font-medium text-white">I accept
+                    the Deviants Mints pass <a href="#" class="text-[#ff0000]"
+                        (click)="this.isTermsofServiceOpened = true">Terms of service</a></label>
+            </div>
+            <div class="flex flex-col gap-4 text-center mx-12">
+                <button class="bg-[#ffffff88] rounded-full py-3 px-8 text-black font-sans text-base font-bold"
+                    (click)="this.isMintedNow = true">MINT NOW</button>
+                <button (click)="this.joinedAirdrop = true"
+                    class="bg-[#ff0000] rounded-full py-3 px-8 text-white font-sans text-base font-semibold uppercase">Join
+                    Airdrop</button>
+            </div>
+            <p class="font-semibold text-lg text-center text-white font-sans">*Mint will be avilable on Jan 3rd.</p>
+            <div class="flex flex-row items-center justify-center">
+                <a target="_blank" href="https://discord.gg/astranova"
+                    class="flex justify-center items-center w-[52px] h-[52px]">
+                    <!-- Graphic -->
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                        <path
+                            d="M 16.942 3.523 C 15.63 2.91 14.243 2.473 12.816 2.227 C 12.638 2.548 12.43 2.98 12.287 3.324 C 10.749 3.093 9.224 3.093 7.714 3.324 C 7.571 2.98 7.359 2.548 7.179 2.227 C 5.751 2.474 4.362 2.911 3.05 3.526 C 0.439 7.472 -0.269 11.32 0.085 15.114 C 1.817 16.407 3.495 17.193 5.145 17.707 C 5.556 17.143 5.918 16.546 6.229 15.922 C 5.637 15.696 5.066 15.418 4.523 15.091 C 4.665 14.985 4.805 14.875 4.941 14.76 C 8.232 16.299 11.807 16.299 15.059 14.76 C 15.196 14.874 15.335 14.985 15.477 15.091 C 14.933 15.419 14.361 15.698 13.768 15.924 C 14.08 16.55 14.442 17.148 14.851 17.709 C 16.503 17.194 18.183 16.409 19.915 15.114 C 20.33 10.716 19.206 6.904 16.942 3.523 Z M 6.678 12.781 C 5.69 12.781 4.88 11.859 4.88 10.736 C 4.88 9.612 5.672 8.689 6.678 8.689 C 7.683 8.689 8.493 9.611 8.476 10.736 C 8.477 11.859 7.683 12.781 6.678 12.781 Z M 13.322 12.781 C 12.334 12.781 11.524 11.859 11.524 10.736 C 11.524 9.612 12.317 8.689 13.322 8.689 C 14.327 8.689 15.138 9.611 15.12 10.736 C 15.12 11.859 14.327 12.781 13.322 12.781 Z"
+                            fill="#7289da"></path>
+                    </svg>
+                </a>
+                <a target="_blank" href="https://twitter.com/Astra__Nova"
+                    class="flex justify-center items-center w-[52px] h-[52px]">
+                    <!-- twitter_svgrepo_com -->
+                    <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 310"
+                        style="enable-background:new 0 0 310 310" xml:space="preserve">
+                        <path
+                            d="M302.973 57.388a117.512 117.512 0 0 1-14.993 5.463 66.276 66.276 0 0 0 13.494-23.73 5 5 0 0 0-7.313-5.824 117.994 117.994 0 0 1-34.878 13.783c-12.381-12.098-29.197-18.983-46.581-18.983-36.695 0-66.549 29.853-66.549 66.547 0 2.89.183 5.764.545 8.598C101.163 99.244 58.83 76.863 29.76 41.204a5.001 5.001 0 0 0-8.196.642c-5.896 10.117-9.013 21.688-9.013 33.461 0 16.035 5.725 31.249 15.838 43.137a56.37 56.37 0 0 1-8.907-3.977 5 5 0 0 0-7.427 4.257c-.007.295-.007.59-.007.889 0 23.935 12.882 45.484 32.577 57.229a57.372 57.372 0 0 1-5.063-.735 4.998 4.998 0 0 0-5.699 6.437c7.29 22.76 26.059 39.501 48.749 44.605-18.819 11.787-40.34 17.961-62.932 17.961a120.4 120.4 0 0 1-14.095-.826 5 5 0 0 0-3.286 9.174c29.023 18.609 62.582 28.445 97.047 28.445 67.754 0 110.139-31.95 133.764-58.753 29.46-33.421 46.356-77.658 46.356-121.367 0-1.826-.028-3.67-.084-5.508 11.623-8.757 21.63-19.355 29.773-31.536a5 5 0 0 0-6.182-7.351z"
+                            fill="#0EAC99"></path>
+                    </svg>
+                </a>
+                <a target="_blank" href="https://twitter.com/TheDeviantsNFT"
+                    class="flex justify-center items-center w-[52px] h-[52px]">
+                    <!-- twitter_svgrepo_com -->
+                    <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 310"
+                        style="enable-background:new 0 0 310 310" xml:space="preserve">
+                        <path
+                            d="M302.973 57.388a117.512 117.512 0 0 1-14.993 5.463 66.276 66.276 0 0 0 13.494-23.73 5 5 0 0 0-7.313-5.824 117.994 117.994 0 0 1-34.878 13.783c-12.381-12.098-29.197-18.983-46.581-18.983-36.695 0-66.549 29.853-66.549 66.547 0 2.89.183 5.764.545 8.598C101.163 99.244 58.83 76.863 29.76 41.204a5.001 5.001 0 0 0-8.196.642c-5.896 10.117-9.013 21.688-9.013 33.461 0 16.035 5.725 31.249 15.838 43.137a56.37 56.37 0 0 1-8.907-3.977 5 5 0 0 0-7.427 4.257c-.007.295-.007.59-.007.889 0 23.935 12.882 45.484 32.577 57.229a57.372 57.372 0 0 1-5.063-.735 4.998 4.998 0 0 0-5.699 6.437c7.29 22.76 26.059 39.501 48.749 44.605-18.819 11.787-40.34 17.961-62.932 17.961a120.4 120.4 0 0 1-14.095-.826 5 5 0 0 0-3.286 9.174c29.023 18.609 62.582 28.445 97.047 28.445 67.754 0 110.139-31.95 133.764-58.753 29.46-33.421 46.356-77.658 46.356-121.367 0-1.826-.028-3.67-.084-5.508 11.623-8.757 21.63-19.355 29.773-31.536a5 5 0 0 0-6.182-7.351z"
+                            fill="#ff0000"></path>
+                    </svg>
+                </a>
+                <a target="_blank" href="https://t.me/astranovaofficial"
+                    class="flex justify-center items-center w-[52px] h-[52px]">
+
+                    <svg fill="#0088cc" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="20" height="20">
+                        <path
+                            d="M46.137,6.552c-0.75-0.636-1.928-0.727-3.146-0.238l-0.002,0C41.708,6.828,6.728,21.832,5.304,22.445	c-0.259,0.09-2.521,0.934-2.288,2.814c0.208,1.695,2.026,2.397,2.248,2.478l8.893,3.045c0.59,1.964,2.765,9.21,3.246,10.758	c0.3,0.965,0.789,2.233,1.646,2.494c0.752,0.29,1.5,0.025,1.984-0.355l5.437-5.043l8.777,6.845l0.209,0.125	c0.596,0.264,1.167,0.396,1.712,0.396c0.421,0,0.825-0.079,1.211-0.237c1.315-0.54,1.841-1.793,1.896-1.935l6.556-34.077	C47.231,7.933,46.675,7.007,46.137,6.552z M22,32l-3,8l-3-10l23-17L22,32z" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <!--END: MOBILE DIV -->
+
+
+    <!--BEGIN: WEB DIV -->
+    <div class="hidden lg:grid grid-cols-12 gap-4 w-full justify-center items-end">
+        <div class="col-span-12 md:col-span-3">
+            <div class="max-w-[330px] space-y-6">
+
+                <!-- <div *ngIf="!isMetamaskConnected" class="bg__gradient--black p-5 rounded-2xl">
+                    <h2 class=" font-bold text-sm lg:text-base text-white font-sans pb-2">Connect Metamask First</h2>
+                    <p class=" font-normal text-sm text-white font-sans "></p>
+                </div> -->
+                <div *ngIf=" !goldListed && !diamondListed" class="bg__gradient--black p-5 rounded-2xl">
+                    <h2 class=" font-bold text-sm lg:text-base text-white font-sans pb-2">Unfortunately</h2>
+                    <p class=" font-normal text-sm text-white font-sans ">You have not been whitelisted! Come back at
+                        1pm
+                        UTC
+                        for the public mint!</p>
+                </div>
+                <div *ngIf="goldListed && !diamondListed" class="bg__gradient--black p-5 rounded-2xl">
+                    <h2 class=" font-bold text-sm lg:text-base text-white font-sans pb-2">Congratulations!!</h2>
+                    <p class=" font-normal text-sm text-white font-sans ">
+                        You are GoldListed!</p>
+                </div>
+                <div *ngIf="diamondListed" class="bg__gradient--black p-5 rounded-2xl">
+                    <h2 class=" font-bold text-sm lg:text-base text-white font-sans pb-2">Congratulations!!!!!!!!!!</h2>
+                    <p class=" font-normal text-sm text-white font-sans ">You are Diamond Listed</p>
+                </div>
+                <div class="bg-[#000] p-5 rounded-2xl">
+                    <h2 class=" font-bold text-sm lg:text-base text-white font-sans pb-2">NFT Mint Price</h2>
+                    <div class="flex justify-between items-center">
+                        <div class="flex flex-col">
+                            <div class="font-bold text-white font-sans mb-1">AL Pass</div>
+                            <div class="font-bold flex items-end mb-1">
+                                <div class="mr-2 text-white font-sans">0.06 ETH</div>
+                                <div class="text-xs font-normal text-white font-sans">~$73.038</div>
+                            </div>
+                            <div class="flex items-center mb-1">
+                                <img src="assets/icons/slanting-arrow.svg" alt="">
+                                <div class="text-[#ff3838] text-xs font-normal pl-2">4.43% last week</div>
+                            </div>
+                        </div>
+                        <div class="flex flex-col">
+                            <div class="font-bold text-white font-sans mb-1">Public Pass</div>
+                            <div class="font-bold flex items-end mb-1">
+                                <div class="mr-2 text-white font-sans">0.08 ETH</div>
+                                <div class="text-xs font-normal text-white font-sans">~$97.384</div>
+                            </div>
+                            <div class="flex mb-1">
+                                <img src="assets/icons/slanting-arrow.svg" alt="">
+                                <div class="text-[#ff3838] text-xs font-normal pl-2">8.01% last week</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a target="_blank" class="block"
+                    href="https://astranovaofficial.medium.com/the-deviants-mint-pass-event-explained-jan-14th-jan-18th-3227e1c208aa">
+                    <div class="bg-[#000] rounded-2xl bg-cover h-40"
+                        style="background-image: url('../../assets/images/scene.jpg');">
+                    </div>
+                </a>
+                <a target="_blank" class="block"
+                    href="https://astranovaofficial.medium.com/the-deviants-mint-pass-event-explained-jan-14th-jan-18th-3227e1c208aa">
+                    <div class="bg-[#000] rounded-2xl bg-cover h-40"
+                        style="background-image: url('../../assets/images/mint-pass.jpg');">
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-span-12 md:col-span-6 py-4 md:py-0 space-y-6">
+            <div class="max-w-[250px] mx-auto">
+                <div class="grid grid-cols-12 gap-4">
+                    <div class="col-span-3 mx-auto">
+                        <h2 #days
+                            class="text-lg flex justify-center items-center bg-white rounded-lg text-black  font-bold mb-2 w-14 h-14">
+                            {{times.days}}</h2>
+                        <p class="text-secondary text-center text-sm lg:text-base text-white font-sans  font-semibold">
+                            Days</p>
+                    </div>
+                    <div class="col-span-3 mx-auto">
+                        <h2 #hours
+                            class="text-lg flex justify-center items-center bg-white rounded-lg text-black  font-bold mb-2 w-14 h-14">
+                            {{times.hours}}</h2>
+                        <p class="text-secondary text-center text-sm lg:text-base text-white font-sans  font-semibold">
+                            Hours</p>
+                    </div>
+                    <div class="col-span-3 mx-auto">
+                        <h2
+                            class="text-lg flex justify-center items-center bg-white rounded-lg text-black  font-bold mb-2 w-14 h-14">
+                            {{times.minutes}}</h2>
+                        <p class="text-secondary text-center text-sm text-white font-sans  font-semibold">Mins</p>
+                    </div>
+                    <div class="col-span-3 mx-auto">
+                        <h2 #seconds
+                            class="text-lg flex justify-center items-center bg-white rounded-lg text-black  font-bold mb-2 w-14 h-14">
+                            {{times.second}}</h2>
+                        <p class="text-secondary text-center text-sm text-white font-sans  font-semibold">Seconds</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-white font-sans text-sm text-center font-medium">
+                Remaining <span
+                    class="text-white font-sans text-2xl font-bold">{{+contractDetails?.totalDiamondPurchased +
+                    +contractDetails?.totalGoldPurchased + +contractDetails?.totalSilverPurchased}}/8000</span>
+            </div>
+            <div class="flex items-start justify-center">
+                <input checked id="checked-checkbox" type="checkbox" value=""
+                    class="accent-[#ff3838] rounded-full w-5 h-5 text-[#ff3838] bg-[#ff3838] border-gray-300 focus:ring-[#ff3838] focus:ring-2">
+                <label for="checked-checkbox" class="ml-2 text-sm font-medium text-white">I accept
+                    the Deviants Mints pass <a href="#" class="text-[#ff0000]"
+                        (click)="this.isTermsofServiceOpened = true">Terms of service</a></label>
+            </div>
+            <div class="text-center flex justify-center items-center gap-6 mx-auto">
+                <button class="bg-[#ffffff88] rounded-full py-3 px-8 text-black font-sans text-base font-bold"
+                    (click)="this.isMintedNow = true">MINT NOW</button>
+                <button (click)="this.joinedAirdrop = true"
+                    class="bg-[#ff0000] rounded-full py-3 px-8 text-white font-sans text-base font-semibold uppercase">Join
+                    Airdrop</button>
+            </div>
+            <p class="font-semibold text-lg text-center text-white font-sans">*Mint will be avilable on Jan 14 4PM UTC.
+            </p>
+        </div>
+        <div class="col-span-12 md:col-span-2">
+            <div class="fixed right-12 h-full top-0 group">
+                <div class="flex flex-col items-center justify-center mb-4 h-full space-y-2">
+                    <a target="_blank" href="https://discord.gg/astranova"
+                        class="flex justify-center items-center w-[52px] h-[52px]">
+                        <!-- Graphic -->
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                            <path
+                                d="M 16.942 3.523 C 15.63 2.91 14.243 2.473 12.816 2.227 C 12.638 2.548 12.43 2.98 12.287 3.324 C 10.749 3.093 9.224 3.093 7.714 3.324 C 7.571 2.98 7.359 2.548 7.179 2.227 C 5.751 2.474 4.362 2.911 3.05 3.526 C 0.439 7.472 -0.269 11.32 0.085 15.114 C 1.817 16.407 3.495 17.193 5.145 17.707 C 5.556 17.143 5.918 16.546 6.229 15.922 C 5.637 15.696 5.066 15.418 4.523 15.091 C 4.665 14.985 4.805 14.875 4.941 14.76 C 8.232 16.299 11.807 16.299 15.059 14.76 C 15.196 14.874 15.335 14.985 15.477 15.091 C 14.933 15.419 14.361 15.698 13.768 15.924 C 14.08 16.55 14.442 17.148 14.851 17.709 C 16.503 17.194 18.183 16.409 19.915 15.114 C 20.33 10.716 19.206 6.904 16.942 3.523 Z M 6.678 12.781 C 5.69 12.781 4.88 11.859 4.88 10.736 C 4.88 9.612 5.672 8.689 6.678 8.689 C 7.683 8.689 8.493 9.611 8.476 10.736 C 8.477 11.859 7.683 12.781 6.678 12.781 Z M 13.322 12.781 C 12.334 12.781 11.524 11.859 11.524 10.736 C 11.524 9.612 12.317 8.689 13.322 8.689 C 14.327 8.689 15.138 9.611 15.12 10.736 C 15.12 11.859 14.327 12.781 13.322 12.781 Z"
+                                fill="#7289da"></path>
+                        </svg>
+                    </a>
+
+                    <a target="_blank" href="https://twitter.com/Astra__Nova"
+                        class="flex justify-center items-center w-[52px] h-[52px]">
+                        <!-- twitter_svgrepo_com -->
+                        <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 310"
+                            style="enable-background:new 0 0 310 310" xml:space="preserve">
+                            <path
+                                d="M302.973 57.388a117.512 117.512 0 0 1-14.993 5.463 66.276 66.276 0 0 0 13.494-23.73 5 5 0 0 0-7.313-5.824 117.994 117.994 0 0 1-34.878 13.783c-12.381-12.098-29.197-18.983-46.581-18.983-36.695 0-66.549 29.853-66.549 66.547 0 2.89.183 5.764.545 8.598C101.163 99.244 58.83 76.863 29.76 41.204a5.001 5.001 0 0 0-8.196.642c-5.896 10.117-9.013 21.688-9.013 33.461 0 16.035 5.725 31.249 15.838 43.137a56.37 56.37 0 0 1-8.907-3.977 5 5 0 0 0-7.427 4.257c-.007.295-.007.59-.007.889 0 23.935 12.882 45.484 32.577 57.229a57.372 57.372 0 0 1-5.063-.735 4.998 4.998 0 0 0-5.699 6.437c7.29 22.76 26.059 39.501 48.749 44.605-18.819 11.787-40.34 17.961-62.932 17.961a120.4 120.4 0 0 1-14.095-.826 5 5 0 0 0-3.286 9.174c29.023 18.609 62.582 28.445 97.047 28.445 67.754 0 110.139-31.95 133.764-58.753 29.46-33.421 46.356-77.658 46.356-121.367 0-1.826-.028-3.67-.084-5.508 11.623-8.757 21.63-19.355 29.773-31.536a5 5 0 0 0-6.182-7.351z"
+                                fill="#0EAC99"></path>
+                        </svg>
+                    </a>
+                    <a target="_blank" href="https://twitter.com/TheDeviantsNFT"
+                        class="flex justify-center items-center w-[52px] h-[52px]">
+                        <!-- twitter_svgrepo_com -->
+                        <svg width="20" height="20" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 310 310"
+                            style="enable-background:new 0 0 310 310" xml:space="preserve">
+                            <path
+                                d="M302.973 57.388a117.512 117.512 0 0 1-14.993 5.463 66.276 66.276 0 0 0 13.494-23.73 5 5 0 0 0-7.313-5.824 117.994 117.994 0 0 1-34.878 13.783c-12.381-12.098-29.197-18.983-46.581-18.983-36.695 0-66.549 29.853-66.549 66.547 0 2.89.183 5.764.545 8.598C101.163 99.244 58.83 76.863 29.76 41.204a5.001 5.001 0 0 0-8.196.642c-5.896 10.117-9.013 21.688-9.013 33.461 0 16.035 5.725 31.249 15.838 43.137a56.37 56.37 0 0 1-8.907-3.977 5 5 0 0 0-7.427 4.257c-.007.295-.007.59-.007.889 0 23.935 12.882 45.484 32.577 57.229a57.372 57.372 0 0 1-5.063-.735 4.998 4.998 0 0 0-5.699 6.437c7.29 22.76 26.059 39.501 48.749 44.605-18.819 11.787-40.34 17.961-62.932 17.961a120.4 120.4 0 0 1-14.095-.826 5 5 0 0 0-3.286 9.174c29.023 18.609 62.582 28.445 97.047 28.445 67.754 0 110.139-31.95 133.764-58.753 29.46-33.421 46.356-77.658 46.356-121.367 0-1.826-.028-3.67-.084-5.508 11.623-8.757 21.63-19.355 29.773-31.536a5 5 0 0 0-6.182-7.351z"
+                                fill="#ff0000"></path>
+                        </svg>
+                    </a>
+
+                    <a target="_blank" href="https://t.me/astranovaofficial"
+                        class="flex justify-center items-center w-[52px] h-[52px]">
+                        <!-- Graphic -->
+                        <svg fill="#0088cc" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 50 50" width="20"
+                            height="20">
+                            <path
+                                d="M46.137,6.552c-0.75-0.636-1.928-0.727-3.146-0.238l-0.002,0C41.708,6.828,6.728,21.832,5.304,22.445	c-0.259,0.09-2.521,0.934-2.288,2.814c0.208,1.695,2.026,2.397,2.248,2.478l8.893,3.045c0.59,1.964,2.765,9.21,3.246,10.758	c0.3,0.965,0.789,2.233,1.646,2.494c0.752,0.29,1.5,0.025,1.984-0.355l5.437-5.043l8.777,6.845l0.209,0.125	c0.596,0.264,1.167,0.396,1.712,0.396c0.421,0,0.825-0.079,1.211-0.237c1.315-0.54,1.841-1.793,1.896-1.935l6.556-34.077	C47.231,7.933,46.675,7.007,46.137,6.552z M22,32l-3,8l-3-10l23-17L22,32z" />
+                        </svg>
+
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--END: WEB DIV -->
+</div>
+
+<!-- !TODO: Change According to condition  -->
+<div class="fixed z-50 inset-0 overflow-y-auto" *ngIf="isWhitelisted" aria-labelledby="modal-title" role="dialog"
+    aria-modal="true">
+    <div class="flex items-start lg:items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-black/80 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+        <!-- This element is to trick the browser into centering the modal contents. -->
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div
+            class="relative inline-block align-bottom border-primary bg-white p-8 rounded-xl text-left overflow-hidden transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+            <div class="flex items-center mb-4">
+                <h2 class="font-bold  text-black text-center text-base lg:text-lg mx-auto">Congratulations</h2>
+                <div (click)="this.isWhitelisted = false" class="cursor-pointer">
+                    <!-- graphic -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                        class="w-5 h-5 ml-auto">
+                        <path
+                            d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22z">
+                        </path>
+                    </svg>
+                </div>
+            </div>
+            <div class="grid grid-cols-12 gap-4">
+                <div class="col-span-12 md:col-span-12">
+                    <p class="text-black text-center text-base lg:text-lg font-normal">You have been whitelisted! Come
+                        back on Jan 3rd for the mint!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fixed z-50 inset-0 overflow-y-auto" [ngClass]="isMintedNow ? 'block' : 'hidden'"
+    aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex items-start lg:items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-black/80 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+        <!-- This element is to trick the browser into centering the modal contents. -->
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div
+            class="inline-block align-bottom border-primary bg-black rounded-xl text-left overflow-hidden transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full">
+
+            <div class="w-full relative">
+                <div class="h-48"
+                    style="background: #121212 url(assets/images/bg-body.png) no-repeat top;  background-size: cover; position: sticky; background-attachment: fixed;">
+                    <div (click)="this.isMintedNow = false"
+                        class="cursor-pointer absolute top-4 right-4 p-3 bg-[#ffffff5c] rounded-full">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                            <path
+                                d="M 5.024 4.176 C 4.788 3.956 4.419 3.962 4.191 4.191 C 3.962 4.419 3.956 4.788 4.176 5.024 L 7.152 8 L 4.176 10.976 C 4.015 11.126 3.949 11.351 4.004 11.563 C 4.058 11.776 4.224 11.942 4.437 11.996 C 4.649 12.051 4.874 11.985 5.024 11.824 L 8 8.848 L 10.976 11.824 C 11.126 11.985 11.351 12.051 11.563 11.996 C 11.776 11.942 11.942 11.776 11.996 11.563 C 12.051 11.351 11.985 11.126 11.824 10.976 L 8.848 8 L 11.824 5.024 C 12.044 4.788 12.038 4.419 11.809 4.191 C 11.581 3.962 11.212 3.956 10.976 4.176 L 8 7.152 Z"
+                                fill="hsl(0, 0%, 100%)"></path>
+                        </svg>
+                    </div>
+                </div>
+
+                <div class="p-8 lg:px-12">
+                    <div class="grid grid-cols-12 gap-4 gap-y-6">
+                        <div class="col-span-12 md:col-span-12 pb-2">
+                            <h2 class="text-white font-sans font-semibold text-base lg:text-xl text-center pb-2">Buy
+                                Deviants Mints Pass NFT
+                            </h2>
+                            <p class="text-[#4a494b] text-sm lg:text-base font-normal text-center">Select the amount of
+                                the
+                                Deviants you would like to mint.</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-4 gap-y-6 p-4 md:p-8 md:divide-x md:divide-[#121417]">
+                        <div class="col-span-12 md:col-span-4 px-2">
+                            <p class="text-[#4a494b] text-xs md:text-sm text-center font-normal">Free Mint</p>
+                            <h2 class="text-base lg:text-xl text-white text-center font-semibold pb-2">
+                                {{this.buydAmount}} Free</h2>
+                            <p class="text-[#4a494b] text-base text-center font-normal">You Own :
+                                {{userDetails?.diamondPurchased}}</p>
+                            <p class="text-[#4a494b] text-xs md:text-sm text-center font-normal pt-2">NFT Id</p>
+                        </div>
+                        <div class="col-span-12 md:col-span-4 px-2">
+                            <p class="text-[#4a494b] text-xs md:text-sm text-center font-normal">Allowlist Past Price:
+                            </p>
+                            <h2 class="text-base lg:text-xl text-white text-center font-semibold pb-2">
+                                {{this.buygAmount}} x 0.06 ETH
+                            </h2>
+                            <p class="text-[#4a494b] text-base text-center font-normal">You Own :
+                                {{userDetails?.goldPurchased}}</p>
+                            <p class="text-[#4a494b] text-xs md:text-sm text-center font-normal pt-2">NFT Id</p>
+                        </div>
+                        <div class="col-span-12 md:col-span-4 px-2">
+
+                            <p class="text-[#4a494b] text-xs md:text-sm text-center font-normal">Public Mint Pass price:
+                            </p>
+
+                            <h2 class="text-base lg:text-xl text-white font-sans text-center font-semibold pb-2">
+                                {{this.buysAmount}} x 0.08 ETH</h2>
+
+                            <p class="text-[#4a494b] text-base  text-center font-normal pt-2">You Own :
+                                {{userDetails?.silverPurchased}}</p>
+                            <p class="text-[#4a494b] text-base  text-center font-normal pt-2">NFT Id</p>
+
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-4">
+                        <div class="col-span-12 space-y-4">
+                            <div class="border border-solid border-[#121417] rounded-2xl p-4 px-6">
+                                <div class="flex gap-4 items-center justify-between">
+
+                                    <label for="countries"
+                                        class="block mb-2 w-1/2 md:w-1/2 text-sm lg:text-base text-white font-medium">Select
+                                        Amount</label>
+
+                                    <select [(ngModel)]="ccLimit" (ngModelChange)="buyNow($event)" id="countries"
+                                        class="bg-black-900 w-1/2 md:w-1/4 border focus:outline-none border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-[#ff3838] focus:border-[#ff3838] block p-2.5 dark:bg-gray-900 dark:border-gray-800 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <option selected>Select Amount</option>
+                                        <option *ngFor="let limit of cLimit;index as i" [value]="i">{{i}}</option>
+                                    </select>
+
+                                </div>
+                            </div>
+                            <div class="border border-solid border-[#121417] rounded-2xl p-4 px-6">
+                                <div class="flex gap-4 items-center justify-between">
+                                    <p class="text-sm lg:text-base text-white font-sans font-medium">Final Mint Price
+                                    </p>
+                                    <div
+                                        class="text-white font-sans text-base md:text-xl font-bold flex items-center gap-4">
+                                        {{finalFee}} ETH <span class="text-[#4a494b] font-normal text-sm pt-1"> ~
+                                            $2.487,00</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="border border-solid border-[#121417] rounded-2xl p-4 px-6"> -->
+                            <!-- <div class="grid grid-cols-12 gap-4 lg:gap-8 ">
+                                   <div class="col-span-12 lg:col-span-4">
+                                        <p class="text-[#4a494b] text-base text-center font-normal">Silver</p>
+                                        <h4 class="text-xl lg:text-2xl text-white font-sans text-center font-semibold">{{buysAmount}}</h4>
+                                   </div>
+                                   <div class="col-span-12 lg:col-span-4">
+                                        <p class="text-[#4a494b] text-base text-center font-normal">Gold</p>
+                                        <h4 class="text-xl lg:text-2xl text-white font-sans text-center font-semibold">{{buygAmount}}</h4>
+                                   </div>
+                                   <div class="col-span-12 lg:col-span-4">
+                                        <p class="text-[#4a494b] text-base text-center font-normal">Diamond</p>
+                                        <h4 class="text-xl lg:text-2xl text-white font-sans text-center font-semibold">{{buydAmount}}</h4>
+                                   </div>
+                                </div> -->
+                            <!-- </div> -->
+                        </div>
+                        <div class="col-span-12">
+                            <div class="text-center mt-8">
+                                <button (click)="mintNow()" [disabled]="processing || this.ccLimit<=0"
+                                    [ngClass]="{'opacity-50':processing || this.ccLimit<=0}"
+                                    class="uppercase text-sm md:text-base p-2 md:p-4 px-8 md:px-12 rounded-full font-medium bg-white">Mint
+                                    Now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fixed z-50 inset-0 overflow-y-auto" *ngIf="loader" aria-labelledby="modal-title" role="dialog"
+    aria-modal="true">
+    <div
+        class="flex items-center md items-start:lg:items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-[#ff0000]/2 backdrop-blur-lg transition-opacity" aria-hidden="true"></div>
+
+        <!-- This element is to trick the browser into centering the modal contents. -->
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div
+            class="relative inline-block align-bottom overflow-hidden transform transition-all delay-700 sm:my-8 sm:align-middle sm:max-w-md">
+            <div>
+                <div class="reverse-spinner"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fixed z-50 inset-0 overflow-y-auto" *ngIf="isTotalGoldReached" aria-labelledby="modal-title" role="dialog"
+    aria-modal="true">
+    <div
+        class="flex items-center md items-start:lg:items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-[#ff0000]/2 backdrop-blur-lg transition-opacity" aria-hidden="true"></div>
+
+        <!-- This element is to trick the browser into centering the modal contents. -->
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>Gold limit
+        reached please login with silver account
+        <div
+            class="relative inline-block align-bottom overflow-hidden transform transition-all delay-700 sm:my-8 sm:align-middle sm:max-w-md">
+            <div>
+                <div class="reverse-spinner"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fixed z-50 inset-0 overflow-y-auto" *ngIf="isTotalDiamondReached" aria-labelledby="modal-title"
+    role="dialog" aria-modal="true">
+    <div
+        class="flex items-center md items-start:lg:items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-[#ff0000]/2 backdrop-blur-lg transition-opacity" aria-hidden="true"></div>
+
+        <!-- This element is to trick the browser into centering the modal contents. -->
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>Diamond limit
+        reached please login with silver account
+        <div
+            class="relative inline-block align-bottom overflow-hidden transform transition-all delay-700 sm:my-8 sm:align-middle sm:max-w-md">
+            <div>
+                <div class="reverse-spinner"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="fixed z-50 inset-0 overflow-y-auto" *ngIf="isTotalSilverReached" aria-labelledby="modal-title" role="dialog"
+    aria-modal="true">
+    <div
+        class="flex items-center md items-start:lg:items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-[#ff0000]/2 backdrop-blur-lg transition-opacity" aria-hidden="true"></div>
+
+        <!-- This element is to trick the browser into centering the modal contents. -->
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>Silver limit
+        reached please login with diamond or silver account
+        <div
+            class="relative inline-block align-bottom overflow-hidden transform transition-all delay-700 sm:my-8 sm:align-middle sm:max-w-md">
+            <div>
+                <div class="reverse-spinner"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="fixed z-50 inset-0 overflow-y-auto" *ngIf="isTermsofServiceOpened" aria-labelledby="modal-title"
+    role="dialog" aria-modal="true">
+    <div class="flex items-start lg:items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-black/80 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+        <!-- This element is to trick the browser into centering the modal contents. -->
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div
+            class="relative inline-block align-bottom border-primary rounded-xl text-left overflow-hidden transform transition-all sm:my-8 sm:align-middle sm:max-w-2xl sm:w-full">
+            <div class="flex items-center mb-4">
+                <!-- <h2 class="font-bold  text-black text-center text-base lg:text-lg mx-auto">Congratulations</h2> -->
+                <div (click)="this.isTermsofServiceOpened = false" class="float-right ml-auto cursor-pointer">
+                    <!-- graphic -->
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="#fff" class="w-5 h-5 ml-auto">
+                        <path
+                            d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22z">
+                        </path>
+                    </svg>
+                </div>
+            </div>
+            <img src="assets/images/terms-conditions.jpeg" class="h-full w-full" alt="">
+        </div>
+    </div>
+</div>
+
+<div *ngIf="joinedAirdrop" class="fixed z-50 inset-0 overflow-y-auto " aria-labelledby="modal-title" role="dialog"
+    aria-modal="true">
+    <div class="flex items-start lg:items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-black/80 backdrop-blur-lg bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+        <!-- This element is to trick the browser into centering the modal contents. -->
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div
+            class="relative inline-block space-y-6 px-12 md:px-16 align-bottom border-primary p-6 md:py-8 bg-black rounded-xl text-left overflow-hidden transform transition-all sm:my-8 sm:align-middle sm:max-w-xl sm:w-full">
+            <div class="flex items-start justify-between">
+                <div>
+                    <h2 class="font-bold  text-white text-center text-xl lg:text-2xl">Add your Hedera wallet</h2>
+                    <p class="text-white text-center text-base lg:text-lg font-normal py-5">Congratulations you are eligible for
+                        the $RVV Token Airdrop! Please Enter your Hedra wallet address to receive the $RVV Airdrop Rewards.
+                    </p>
+                </div>
+                <!-- <div class="float-right ml-auto cursor-pointer">                   
+                    <svg  xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="#fff"
+                        class="w-6 h-6 ml-auto">
+                        <path
+                            d="M6.28 5.22a.75.75 0 0 0-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 1 0 1.06 1.06L10 11.06l3.72 3.72a.75.75 0 1 0 1.06-1.06L11.06 10l3.72-3.72a.75.75 0 0 0-1.06-1.06L10 8.94 6.28 5.22z">
+                        </path>
+                    </svg>
+                </div> -->
+            </div>
+            <div class="grid grid-cols-1 gap-4 ">
+                <div class="text-center space-y-6 ">
+                    <div>
+                        <!-- <label for="default-input" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Enter URI</label> -->
+                        <input type="text" id="default-input" class="bg-[#1F2025] font-medium border border-[#1F2025] text-white text-sm rounded-lg focus:outline-none focus:ring-[#ff0000] focus:border-[#ff0000] block w-full p-4" placeholder="Hedara wallet Address">
+                    </div>
+                    <p class="text-white text-center text-base lg:text-lg font-normal py-4">If you don't have a hedra wallet create one quickly over here.
+                        <a class="text-[#ff0000] text-center text-base lg:text-lg font-normal" href="https://www.bladewallet.io/astronova/">https://www.bladewallet.io/astronova/</a>
+                    </p>
+                    <div class="flex justify-between items-center">
+                        <div>
+                            <p class="text-[#4a494b] text-xs md:text-sm text-center font-normal">Own 3 Mint Pass
+                            </p>
+                            <h2 class="text-lg lg:text-3xl text-white text-center font-bold pb-2">
+                                20,000 $RVV
+                            </h2>
+                        </div>
+                        <div>
+                            <p class="text-[#4a494b] text-xs md:text-sm text-center font-normal">Own 1 Mint Pass
+                            </p>
+                            <h2 class="text-lg lg:text-3xl text-white text-center font-bold pb-2">
+                                3000 $RVV
+                            </h2>
+                        </div>
+                    </div>
+                    <button class="uppercase !mt-12 text-sm md:text-base p-2 md:p-4 px-8 md:px-12 mx-auto rounded-full font-medium bg-white">Confirm</button>
+                    <p class="text-[#4a494b] text-xs md:text-sm text-center font-normal"><span class="text-[#ff0000]">*</span>Venting: 40% at TGE, remaining tokens with 6 month linear unlock.</p>
+                </div>
+            </div>
+            <!-- <img src="assets/images/terms-conditions.jpeg" class="h-full w-full" alt=""> -->
+        </div>
+    </div>
+</div>

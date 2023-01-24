@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+input[type='number']::-webkit-inner-spin-button,
+input[type='number']::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.bg__body {
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),  url(assets/images/bg-body.png) no-repeat 50%;
+    background-size: cover;
+    position: sticky;
+    background-attachment: fixed;
+}
+.bg__gradient--black {
+  background: linear-gradient(180deg,#020518,#070a2b);
+}
+
+.dropzone {
+  background-color: #000 !important;
+  border: 1px dashed #2c2c2c !important;
+  border-radius: 1rem !important;
+  height: 170px !important;
+  color: #f1f1f1 !important;
+}
+ngx-dropzone-preview {
+  min-width: 96% !important;
+  max-width: 96% !important;
+  background-color: #000 !important;
+  background-image: unset !important;
+  color: #ff0000 !important;
+  overflow-y: hidden !important;
+}
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

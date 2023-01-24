@@ -1,0 +1,114 @@
+<app-navbar></app-navbar>
+<div
+    class="flex flex-col min-h-screen inset-x-0 w-full px-8 md:px-12 py-24 md:py-28 lg:py-28 relative justify-center items-center z-10 flex-1 space-y-8">
+    <div class="max-w-xl w-full mx-auto space-y-8 absolute top-1/4">
+        <div>
+            <ul class="flex flex-row space-x-4 text-sm font-medium text-center bg-black p-3 rounded-xl mb-10">
+                <li (click)="setActiveTab(0)" class="w-full">
+                    <button [disabled]="processing " [ngClass]="{'opacity-50':processing}"
+                    [ngClass]="isTabActive == 0 ? 'bg-[#ff3838] hover:shadow-red text-black':'bg-black text-white'"
+                        class="cursor-pointer inline-block px-4 py-3  transition-all duration-300 ease-in-out font-medium w-full  text-sm lg:text-base rounded-lg active">Address Checker</button>
+                </li>
+                <li (click)="setActiveTab(1)" class="w-full">
+                    <button [disabled]="processing " [ngClass]="{'opacity-50':processing}"
+                    [ngClass]="isTabActive == 1 ? 'bg-[#ff3838] hover:shadow-red text-black':'bg-black text-white'"
+                    class="cursor-pointer inline-block px-4 py-3  transition-all duration-300 ease-in-out font-medium w-full  text-sm lg:text-base rounded-lg active">
+                        Airdrop</button>
+                </li>
+            </ul>
+
+            <div id="tabContentExample" class="bg-black p-6 rounded-xl">
+                <div *ngIf="isTabActive == 0" id="profile-example" role="tabpanel"
+                    aria-labelledby="profile-tab-example">
+                    <ngx-dropzone (change)="onSelect($event)" class="dropzone hover:shadow-2xl">
+                        <ngx-dropzone-label class="font-normal text-center text-sm lg:text-base">
+                            <img src="assets/icons/upload-cloud-grey.svg" class="h-12 w-12 mx-auto pb-4" alt="bx-finance">
+                            Drag and drop an CSV here, or click to browse.
+                        </ngx-dropzone-label>
+                        <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                        </ngx-dropzone-preview>
+                    </ngx-dropzone>
+                 
+                    <div *ngIf="isError"  class="overflow-x-auto relative shadow-card sm:rounded-t-lg h-40 overflow-y-scroll mt-8">
+                        <table class="w-full text-sm border border-solid border-[#2c2c2c]">
+                            <thead class="text-xs uppercase bg-[#2c2c2c] rounded-3xl">
+                                <tr>
+                                    <th scope="col" class="py-3 px-6 text-[#fcfcfc] font-normal text-sm text-center">Error Line
+                                    </th>
+                                    <th scope="col" class="py-3 px-6 text-[#fcfcfc] font-normal text-sm text-center">
+                                       Error Address </th>
+                                </tr>
+                            </thead>
+                            <tbody class="rounded-3xl">
+                                <tr *ngFor="let error of bulkUploadErrorLine;index as i" class="bg-secondary-dark rounded-3xl">
+                                    <td class="py-4 px-6 w-6/12 text-center rounded-3xl">
+                                        <p class="text-[#fcfcfc] font-medium text-sm text-center"> {{error}} </p>
+                                    </td>
+                                
+                                    <td class="py-4 px-6 w-6/12 text-center rounded-3xl">
+                                        <p class="text-center text-[#ff0000] font-normal text-sm lg:text-base">
+                                            Invalid</p>  
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div *ngIf="isTabActive == 1" class="rounded-xl" id="dashboard-example" role="tabpanel"
+                    aria-labelledby="dashboard-tab-example">
+                    <ngx-dropzone (change)="onSelect($event)" class="dropzone hover:shadow-2xl">
+                        <ngx-dropzone-label class="font-normal text-center text-sm lg:text-base">
+                            <img src="assets/icons/upload-cloud-grey.svg" class="h-12 w-12 mx-auto pb-4" alt="bx-finance">
+                            Drag and drop an CSV here, or click to browse.
+                        </ngx-dropzone-label>
+                        <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+                            <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+                        </ngx-dropzone-preview>
+                    </ngx-dropzone>
+
+                    <div *ngIf="isError" class="overflow-x-auto relative shadow-card  h-40 overflow-y-scroll sm:rounded-t-lg mt-8">
+                        <table class="w-full text-sm border border-solid border-[#2c2c2c]">
+                            <thead  class="text-xs uppercase bg-[#2c2c2c] rounded-3xl">
+                                <tr>
+                                    <th scope="col" class="py-3 px-6 text-[#fcfcfc] font-normal text-sm text-center">Error Line
+                                    </th>
+                                    <th scope="col" class="py-3 px-6 text-[#fcfcfc] font-normal text-sm text-center">
+                                       Error Address </th>                                 
+                                </tr>
+                            </thead>
+                            <tbody  class="rounded-3xl">
+                                <tr *ngFor="let error of bulkUploadErrorLine;index as i" class="bg-secondary-dark rounded-3xl">
+                                    <td class="py-4 px-6 w-6/12 text-center rounded-3xl">
+                                        <p class="text-[#fcfcfc] font-medium text-sm text-center"> {{error}} </p>
+                                    </td>
+                                   
+                                    <td class="py-4 px-6 w-6/12 text-center rounded-3xl">
+                                        <p class="text-center text-[#ff0000] font-normal text-sm lg:text-base">
+                                            Invalid</p>  
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                    </div>
+                    <div class="mt-8">
+                        <button (click)="airdrop()" [disabled]="processing ||bulkUploadErrorLine>0||bulkData==0" [ngClass]="{'opacity-50':processing ||bulkUploadErrorLine>0||bulkData==0}"
+                            class="bg-[#ef4444] hover:shadow-red transition-all duration-300 ease-in-out p-3 px-8 font-medium w-full text-white text-sm lg:text-base rounded-lg">Airdrop</button>
+                    </div>
+                    <!-- <div class="grid grid-cols-12 gap-4 mt-6">
+                        <div class="col-span-12 md:col-span-6">
+                            <button (click)="addDiamond()" type="button" [disabled]="processing || !this.isBulkDataValid || this.excelData?.length==0" [ngClass]="{'opacity-50':processing || !this.isBulkDataValid || this.excelData?.length==0}"
+                            class="bg-[#10b981] hover:shadow-green transition-all duration-300 ease-in-out p-4 px-8 font-medium w-full text-white text-sm lg:text-base rounded-lg">Add Diamond List</button>
+                       
+                        </div>
+                        <div class="col-span-12 md:col-span-6">
+                            <button (click)="removeDiamond()" type="button" [disabled]="processing || !this.isBulkDataValid || this.excelData?.length==0" [ngClass]="{'opacity-50':processing || !this.isBulkDataValid || this.excelData?.length==0}"
+                            class="bg-[#ef4444] hover:shadow-red transition-all duration-300 ease-in-out p-4 px-8 font-medium w-full text-white text-sm lg:text-base rounded-lg">Remove Diamond List</button>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

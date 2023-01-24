@@ -1,0 +1,8 @@
+
+.dropzone {
+    background-color: #000 !important;
+    border: 1px dashed #3b3b3b !important;
+    border-radius: 1rem !important;
+    height: 160px !important;
+    overflow-y: hidden !important;
+}
