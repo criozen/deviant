@@ -14,7 +14,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     MintNowRoutingModule,
     SharedModule,
-    FormsModule
+    FormsModule,
+    
   ]
 })
 export class MintNowModule { }

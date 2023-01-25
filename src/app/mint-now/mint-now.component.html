@@ -7,12 +7,8 @@
         <div class="col-span-12">
             <div
                 class="w-full right-6 lg:max-w-[330px] lg:space-y-6 flex justify-start items-start md:flex-none relative overflow-x-scroll">
-                <!-- <div *ngIf="!isMetamaskConnected"
-                    class="bg__gradient--black w-[300px] p-5 rounded-2xl absolute mr-6 left-12 top-0">
-                    <h2 class=" font-bold text-sm lg:text-base text-white font-sans pb-2">Connect MetaMask first</h2>
-                    <p class=" font-normal text-sm text-white font-sans "></p>
-                </div> -->
-                <div *ngIf="!goldListed && !diamondListed"
+              
+                <!-- <div *ngIf="!goldListed && !diamondListed"
                     class="bg__gradient--black w-[300px] p-5 rounded-2xl absolute mr-6 left-12 top-0">
                     <h2 class=" font-bold text-sm lg:text-base text-white font-sans pb-2">Unfortunately</h2>
                     <p class=" font-normal text-sm text-white font-sans ">You have not been whitelisted! Come back at
@@ -59,7 +55,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <a target="_blank" class="block"
                     href="https://astranovaofficial.medium.com/the-deviants-mint-pass-event-explained-jan-14th-jan-18th-3227e1c208aa">
                     <div class="bg-[#000] rounded-2xl bg-cover h-40 absolute left-[48rem] top-0"
@@ -176,11 +172,8 @@
         <div class="col-span-12 md:col-span-3">
             <div class="max-w-[330px] space-y-6">
 
-                <!-- <div *ngIf="!isMetamaskConnected" class="bg__gradient--black p-5 rounded-2xl">
-                    <h2 class=" font-bold text-sm lg:text-base text-white font-sans pb-2">Connect Metamask First</h2>
-                    <p class=" font-normal text-sm text-white font-sans "></p>
-                </div> -->
-                <div *ngIf=" !goldListed && !diamondListed" class="bg__gradient--black p-5 rounded-2xl">
+              
+                <!-- <div *ngIf=" !goldListed && !diamondListed" class="bg__gradient--black p-5 rounded-2xl">
                     <h2 class=" font-bold text-sm lg:text-base text-white font-sans pb-2">Unfortunately</h2>
                     <p class=" font-normal text-sm text-white font-sans ">You have not been whitelisted! Come back at
                         1pm
@@ -222,7 +215,7 @@
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 <a target="_blank" class="block"
                     href="https://astranovaofficial.medium.com/the-deviants-mint-pass-event-explained-jan-14th-jan-18th-3227e1c208aa">
                     <div class="bg-[#000] rounded-2xl bg-cover h-40"
@@ -410,11 +403,11 @@
                             <p class="text-[#4a494b] text-xs md:text-sm text-center font-normal">Free Mint</p>
                             <h2 class="text-base lg:text-xl text-white text-center font-semibold pb-2">
                                 {{this.buydAmount}} Free</h2>
-                            <p class="text-[#4a494b] text-base text-center font-normal">You Own :
+                            <!-- <p class="text-[#4a494b] text-base text-center font-normal">You Own :
                                 {{userDetails?.diamondPurchased}}</p>
-                            <p class="text-[#4a494b] text-xs md:text-sm text-center font-normal pt-2">NFT Id</p>
+                            <p class="text-[#4a494b] text-xs md:text-sm text-center font-normal pt-2">NFT Id</p> -->
                         </div>
-                        <div class="col-span-12 md:col-span-4 px-2">
+                        <!-- <div class="col-span-12 md:col-span-4 px-2">
                             <p class="text-[#4a494b] text-xs md:text-sm text-center font-normal">Allowlist Past Price:
                             </p>
                             <h2 class="text-base lg:text-xl text-white text-center font-semibold pb-2">
@@ -423,18 +416,18 @@
                             <p class="text-[#4a494b] text-base text-center font-normal">You Own :
                                 {{userDetails?.goldPurchased}}</p>
                             <p class="text-[#4a494b] text-xs md:text-sm text-center font-normal pt-2">NFT Id</p>
-                        </div>
+                        </div> -->
                         <div class="col-span-12 md:col-span-4 px-2">
 
                             <p class="text-[#4a494b] text-xs md:text-sm text-center font-normal">Public Mint Pass price:
                             </p>
 
                             <h2 class="text-base lg:text-xl text-white font-sans text-center font-semibold pb-2">
-                                {{this.buysAmount}} x 0.08 ETH</h2>
+                                {{this.buygAmount}} x 0.0035 ETH</h2>
 
-                            <p class="text-[#4a494b] text-base  text-center font-normal pt-2">You Own :
+                            <!-- <p class="text-[#4a494b] text-base  text-center font-normal pt-2">You Own :
                                 {{userDetails?.silverPurchased}}</p>
-                            <p class="text-[#4a494b] text-base  text-center font-normal pt-2">NFT Id</p>
+                            <p class="text-[#4a494b] text-base  text-center font-normal pt-2">NFT Id</p> -->
 
                         </div>
                     </div>
@@ -513,57 +506,7 @@
         </div>
     </div>
 </div>
-<div class="fixed z-50 inset-0 overflow-y-auto" *ngIf="isTotalGoldReached" aria-labelledby="modal-title" role="dialog"
-    aria-modal="true">
-    <div
-        class="flex items-center md items-start:lg:items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div class="fixed inset-0 bg-[#ff0000]/2 backdrop-blur-lg transition-opacity" aria-hidden="true"></div>
 
-        <!-- This element is to trick the browser into centering the modal contents. -->
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>Gold limit
-        reached please login with silver account
-        <div
-            class="relative inline-block align-bottom overflow-hidden transform transition-all delay-700 sm:my-8 sm:align-middle sm:max-w-md">
-            <div>
-                <div class="reverse-spinner"></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="fixed z-50 inset-0 overflow-y-auto" *ngIf="isTotalDiamondReached" aria-labelledby="modal-title"
-    role="dialog" aria-modal="true">
-    <div
-        class="flex items-center md items-start:lg:items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div class="fixed inset-0 bg-[#ff0000]/2 backdrop-blur-lg transition-opacity" aria-hidden="true"></div>
-
-        <!-- This element is to trick the browser into centering the modal contents. -->
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>Diamond limit
-        reached please login with silver account
-        <div
-            class="relative inline-block align-bottom overflow-hidden transform transition-all delay-700 sm:my-8 sm:align-middle sm:max-w-md">
-            <div>
-                <div class="reverse-spinner"></div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="fixed z-50 inset-0 overflow-y-auto" *ngIf="isTotalSilverReached" aria-labelledby="modal-title" role="dialog"
-    aria-modal="true">
-    <div
-        class="flex items-center md items-start:lg:items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div class="fixed inset-0 bg-[#ff0000]/2 backdrop-blur-lg transition-opacity" aria-hidden="true"></div>
-
-        <!-- This element is to trick the browser into centering the modal contents. -->
-        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>Silver limit
-        reached please login with diamond or silver account
-        <div
-            class="relative inline-block align-bottom overflow-hidden transform transition-all delay-700 sm:my-8 sm:align-middle sm:max-w-md">
-            <div>
-                <div class="reverse-spinner"></div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <div class="fixed z-50 inset-0 overflow-y-auto" *ngIf="isTermsofServiceOpened" aria-labelledby="modal-title"
     role="dialog" aria-modal="true">

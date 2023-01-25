@@ -45,12 +45,9 @@ export class MintNowComponent implements OnInit {
   public accessKey1: any;
   public times: any = {};
   public totalGoldLimit: any;
-  public totalDiamondLimit: any;
-  public totalSilverLimit: any;
+
   public contractDetails: any;
-  public isTotalDiamondReached: boolean = false;
-  public isTotalGoldReached: boolean = false;
-  public isTotalSilverReached: boolean = false;
+
   public isTermsofServiceOpened: boolean = false;
   public dLimit: any = 0;
   public buydLimit: any = [0];
@@ -65,7 +62,8 @@ export class MintNowComponent implements OnInit {
   public ccLimit:any=[]
   public currentHash:any;
   public joinedAirdrop: boolean = false;
-
+  public times1:any={}
+  public tx:any
   constructor(
     private mintService: MintService,
     private commonContractService: CommonContractService,
@@ -78,10 +76,13 @@ export class MintNowComponent implements OnInit {
         this.isMetamaskConnected = res;
       }
     );
+   
 
     this.commonContractService.accountObservable.subscribe(async (res: any) => {
       if (res) {
         this.account = await res;
+        this.getTier()
+        this.countDown()
         let countOfUser = await this.mintService.count(this.account.walletAddress) 
         if(countOfUser ==0){
           this.dLimit=1
@@ -144,7 +145,7 @@ export class MintNowComponent implements OnInit {
     this.processing = true;
     console.log(this.accessKey);
     this.processing = true;
-    let goldfee = +this.buygAmount * (0.0036 );
+    let goldfee = +this.buygAmount * (0.0035 );
     // let silverfee = +this.buysAmount * this.contractDetails.silverRate;
     let currentDiamondBuy = +this.buydAmount;
     let currentGoldBuy = +this.buygAmount;
@@ -190,6 +191,7 @@ export class MintNowComponent implements OnInit {
       const _claimingAddress = leaf[index];
       const hexProof = merkleTree.getHexProof(_claimingAddress);
       isDiamondList = merkleTree.verify(hexProof, _claimingAddress, roothash);
+     console.log(hexProof)
       isGoldList = true;
       this.diamondListed = isDiamondList;
       this.goldListed = isGoldList;
@@ -244,7 +246,13 @@ export class MintNowComponent implements OnInit {
         // else this.toastr.error(error.data.message);
         console.log(error.data.message);
       });
-    // if (token) {
+    if (token) {
+      setInterval(async () => {
+        if(this.tx.status){
+          
+        }
+      }),1000
+    }
     //   let diamondBalance: number =
     //     +this.userDetails.diamondPurchased + +this.currentDiamondBuy;
     //   let goldBalance: number =
@@ -355,7 +363,7 @@ export class MintNowComponent implements OnInit {
 
   countDown() {
     // Set the date we're counting down to
-    var countDownDate = new Date('Jan 14, 2023 16:00:00').getTime();
+    var countDownDate = new Date('Feb 07, 2023 16:00:00').getTime();
 
     // Update the count down every 1 second
     setInterval(() => {
@@ -380,6 +388,36 @@ export class MintNowComponent implements OnInit {
       this.times.hours = hours;
       this.times.minutes = minutes;
       this.times.second = seconds;
+      // console.log(this.times)
+    }, 1000);
+  }
+  countDown1() {
+    // Set the date we're counting down to
+    var countDownDate = new Date('Feb 07, 2023 16:00:00').getTime();
+
+    // Update the count down every 1 second
+    setInterval(() => {
+      // Get today's date and time
+      var now = new Date().getTime();
+
+      // Find the distance between now and the count down date
+      var distance = countDownDate - now;
+
+      // Time calculations for days, hours, minutes and seconds
+      var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      var hours = Math.floor(
+        (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+      );
+      var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      // Display the result in the element with id="demo"
+      const time = days + 'd ' + hours + 'h ' + minutes + 'm ' + seconds + 's ';
+
+      this.times1.days = days;
+      this.times1.hours = hours;
+      this.times1.minutes = minutes;
+      this.times1.second = seconds;
       // console.log(this.times)
     }, 1000);
   }
