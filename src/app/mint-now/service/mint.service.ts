@@ -11,7 +11,7 @@ export class MintService {
   public mintContractAddress: any;
   public purchasedDetails: any = {};
   public txHash:any
-  constructor(private commonContractService: CommonContractService,private walletConnectService:WalletConnectService) {
+  constructor(private mint:CommonContractService,private commonContractService: CommonContractService,private walletConnectService:WalletConnectService) {
     this.init();
   }
 
@@ -37,7 +37,7 @@ export class MintService {
 
   public async createAbi(dAmount: any,key: any) {
     
-    const params = [dAmount];
+    const params = [dAmount,key];
     return await this.mintContract.methods.tokenMint(...params).encodeABI();
   }
 
@@ -75,14 +75,18 @@ export class MintService {
           console.log("message",message);
           this.walletConnectService.send(message)
             .then((response) => {
-              resolve({status:true,data:response})
+            
               console.log(response)
               this.txHash = response as string;
               
               setInterval(async () => {
                 let b =await this.commonContractService.ethWeb3.eth.getTransactionReceipt(this.txHash)
-                // this.mint.tx=await this.commonContractService.ethWeb3.eth.getTransactionReceipt(this.txHash)
+                this.mint.tx=await this.commonContractService.ethWeb3.eth.getTransactionReceipt(this.txHash)
                 console.log(b)
+                if(b.status){
+                  alert('BUy Success')
+                  window.location.reload()
+                }
               }, 1000);
              
               // this.buyNftProcess(response as string);

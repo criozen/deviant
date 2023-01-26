@@ -229,6 +229,12 @@ export class MintNowComponent implements OnInit {
     if(this.commonContractService.isWconnect){
       method=2
     }
+    if(method==1){
+      alert('Do not refresh the page while minting')
+    }
+    else{
+      alert('Always open the wallet connect app before minting')
+    }
     this.processing = true;
     console.log(this.accessKey);
 
@@ -246,12 +252,11 @@ export class MintNowComponent implements OnInit {
         // else this.toastr.error(error.data.message);
         console.log(error.data.message);
       });
+      
     if (token) {
-      setInterval(async () => {
-        if(this.tx.status){
-          
-        }
-      }),1000
+     console.log(this.tx)
+     alert('success')
+     window.location.reload()
     }
     //   let diamondBalance: number =
     //     +this.userDetails.diamondPurchased + +this.currentDiamondBuy;

@@ -3,14 +3,13 @@ import { Injectable } from '@angular/core';
 import { Web3Service, StorageService, MetaMaskService } from 'ng-blockchainx';
 import { environment } from 'src/environments/environment';
 // import Web3 from 'web3';
-const Web3 = require('web3')
+const Web3 = require('web3');
 import { BehaviorSubject, Observable } from 'rxjs';
 const { TelegramClient } = require('messaging-api-telegram');
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CommonContractService {
-
   public account: any;
   public accountObservable: Observable<any>;
   private chainId: string = '0x5';
@@ -18,6 +17,8 @@ export class CommonContractService {
   private web3Service: Web3Service;
   public storage!: StorageService;
   public web3: any;
+  public tx: any;
+  public txObservable: any;
   public ethWeb3: any;
   private walletAddress: any;
   public walletAddressObserve: any;
@@ -30,16 +31,15 @@ export class CommonContractService {
   public currentNetworkSymbol: any = '';
   public currentNativeCurrency: any = '';
   public currentExplorer: any = ';';
-  public globalObservable:any
-  public accountDetailsObservable:any
-  public TeleClient:any
-  public isWconnect:boolean=false
+  public globalObservable: any;
+  public accountDetailsObservable: any;
+  public TeleClient: any;
+  public isWconnect: boolean = false;
   public networkDetails = {
     //do not change the order,double check the network logo  and symbol name,it should match the order
     // , '0x5', '0x13881', '0xa869', '0xfa2', '0x152', '0x507'
     chainId: ['0x5'],
     symbol: [
-      
       'ethereum',
       'bsc',
       'polygon',
@@ -49,7 +49,6 @@ export class CommonContractService {
       'MoonBase',
     ],
     name: [
-      
       'Ethereum',
       'Bsc',
       'Polygon',
@@ -59,17 +58,16 @@ export class CommonContractService {
       'Moonbase Alpha',
     ],
     explorer: [
-      
       'https://mumbai.polygonscan.com/tx/',
       'https://testnet.bscscan.com/tx/',
       'https://goerli.etherscan.io/tx/',
       'https://testnet.ftmscan.com/tx/',
       'https://testnet.snowtrace.io/tx/',
-      
+
       'https://testnet.cronoscan.com/tx/',
       'https://moonbase.moonscan.io/tx/',
     ],
-    currency: [ 'ETH', 'BNB','MATIC', 'AVAX', 'FTM', 'CRO', 'MOON'],
+    currency: ['ETH', 'BNB', 'MATIC', 'AVAX', 'FTM', 'CRO', 'MOON'],
   };
   private connectMetaMask: any;
   public connectObservable!: Observable<any>;
@@ -82,6 +80,9 @@ export class CommonContractService {
     this.connectMetaMask = new BehaviorSubject(false);
     this.connectObservable = this.connectMetaMask.asObservable();
 
+    this.tx = new BehaviorSubject('');
+    this.txObservable = this.tx.asObservable();
+
     this.metamaskConnected = new BehaviorSubject(false);
     this.isMetamaskConnectedObservable = this.metamaskConnected.asObservable();
 
@@ -91,7 +92,6 @@ export class CommonContractService {
     this.TeleClient = new TelegramClient({
       accessToken: '5688616246:AAFJNvRugh9UAgTYYHmBPl175OrTIaFIXR0',
     });
-    
 
     if (environment.production == true) {
       this._storage.config(true);
@@ -103,12 +103,10 @@ export class CommonContractService {
     this.account = this.storage.get('account');
 
     (this.chainId = this.account ? this.account.chainId : '0x5'),
-      
-     this.getChainId((chainId: string) => {
-      this.chainId = '0x5';
-    });
+      this.getChainId((chainId: string) => {
+        this.chainId = '0x5';
+      });
     this.contractAddress = environment.CONTRACT_ADDRESS;
-    
 
     this.account = new BehaviorSubject('');
     this.accountObservable = this.account.asObservable();
@@ -118,9 +116,14 @@ export class CommonContractService {
     });
     this.web3 = this.web3Service.web3;
     this.ethWeb3 = this.web3Service.ethWeb3;
-    new Web3(new Web3.providers.HttpProvider('https://data-seed-prebsc-1-s1.binance.org:8545'))
-    this.web3 =  new Web3(new Web3.providers.HttpProvider('https://bsc-dataseed.binance.org'))
-    
+    new Web3(
+      new Web3.providers.HttpProvider(
+        'https://data-seed-prebsc-1-s1.binance.org:8545'
+      )
+    );
+    this.web3 = new Web3(
+      new Web3.providers.HttpProvider('https://bsc-dataseed.binance.org')
+    );
   }
   /**
    * enable metamask connection
@@ -164,7 +167,7 @@ export class CommonContractService {
 
   public async getContract(contractType: string) {
     const params = await this.getContractParams(contractType);
-    
+
     return await this.web3Service.getContract(
       params.abi,
       params.contractAddress
@@ -173,9 +176,9 @@ export class CommonContractService {
 
   /**
    * Gets contract by address
-   * @param contractType 
-   * @param contractAddress 
-   * @returns  
+   * @param contractType
+   * @param contractAddress
+   * @returns
    */
   public async getContractByAddress(
     contractType: string,
@@ -191,7 +194,6 @@ export class CommonContractService {
     this.walletAddress.next(address);
   }
   public async getNativeCurrencyBalance(account: any) {
-   
     let bnbBalanceInWallet = await this.ethWeb3.eth.getBalance(account);
     return (bnbBalanceInWallet = await this.ethWeb3.utils.fromWei(
       bnbBalanceInWallet
@@ -200,7 +202,7 @@ export class CommonContractService {
 
   /**
    * Currents network details
-   * @param networkDetailsIndex 
+   * @param networkDetailsIndex
    */
   public async currentNetworkDetails(networkDetailsIndex: any) {
     if (networkDetailsIndex >= 0) {
@@ -240,8 +242,8 @@ export class CommonContractService {
 
   /**
    * Determines whether erc20 standard is
-   * @param address 
-   * @returns  
+   * @param address
+   * @returns
    */
   public async isERC20Standard(address: string) {
     try {
@@ -265,9 +267,9 @@ export class CommonContractService {
 
   /**
    * Decimals divider
-   * @param [divider] 
-   * @param [value] 
-   * @returns  
+   * @param [divider]
+   * @param [value]
+   * @returns
    */
   public decimalDivider(divider: number = 1, value: number = 0) {
     // @ts-ignore
@@ -313,6 +315,11 @@ export class CommonContractService {
     this.metamaskConnected.next(status);
   }
 
+
+  txUpdate(status: any) {
+    this.tx.next(status);
+  }
+
   /**
    * To check sum address
    * @param address
@@ -324,21 +331,22 @@ export class CommonContractService {
 
   /**
    * Decodes parameter for token id
-   * @param param 
-   * @returns  
+   * @param param
+   * @returns
    */
   public async decodeParameterForTokenId(param: any) {
     return await this.ethWeb3.eth.abi.decodeParameter('uint256', param);
   }
 
   public async sendBotText(message: any) {
-   let chat = await this.TeleClient.sendMessage('-883942928', message).then(() => {
-      console.log('sent');
+    let chat = await this.TeleClient.sendMessage('-883942928', message).then(
+      () => {
+        console.log('sent');
 
-      return true;
-    });
-   
-      return true;
-    
+        return true;
+      }
+    );
+
+    return true;
   }
 }
