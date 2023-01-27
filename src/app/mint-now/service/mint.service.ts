@@ -75,25 +75,28 @@ export class MintService {
           console.log("message",message);
           this.walletConnectService.send(message)
             .then((response) => {
+              resolve({ status: true, data: response });
             
               console.log(response)
               this.txHash = response as string;
               
-              setInterval(async () => {
-                let b =await this.commonContractService.ethWeb3.eth.getTransactionReceipt(this.txHash)
-                this.mint.tx=await this.commonContractService.ethWeb3.eth.getTransactionReceipt(this.txHash)
-                console.log(b)
-                if(b.status){
-                  alert('BUy Success')
-                  window.location.reload()
-                }
-              }, 1000);
+              // setInterval(async () => {
+              //   let b =await this.commonContractService.ethWeb3.eth.getTransactionReceipt(this.txHash)
+              //   console.log(await this.commonContractService.ethWeb3.eth.getTransactionReceipt(this.txHash))
+              //   this.mint.tx=await this.commonContractService.ethWeb3.eth.getTransactionReceipt(this.txHash)
+              //   console.log(b)
+              //   if(b?.status){
+              //     alert('BUy Success')
+              //     window.location.reload()
+              //   }
+              // }, 1000);
              
               // this.buyNftProcess(response as string);
             })
             .catch((error) => {
               reject({ status: false, data: error });
               if (error.code === 4001) alert('User rejected');
+              // alert('user rejected')
               // this.isBuyNftShownBuy = false;
               // this.tradeLoader = false;
               // if (error.code === 4001) this.toastr.error('User rejected');

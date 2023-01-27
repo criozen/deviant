@@ -24,7 +24,7 @@
     "keccak256": "^1.0.6",
     "merkletreejs": "^0.3.9",
     "messaging-api-telegram": "^1.1.0",
-    "ng-blockchainx": "^1.0.4",
+    "ng-blockchainx": "1.0.5",
     "ngx-dropzone": "^3.1.0",
     "ngx-toastr": "^16.0.2",
     "rxjs": "~7.5.0",

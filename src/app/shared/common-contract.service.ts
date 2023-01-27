@@ -58,9 +58,10 @@ export class CommonContractService {
       'Moonbase Alpha',
     ],
     explorer: [
+      'https://goerli.etherscan.io/tx/',
       'https://mumbai.polygonscan.com/tx/',
       'https://testnet.bscscan.com/tx/',
-      'https://goerli.etherscan.io/tx/',
+      
       'https://testnet.ftmscan.com/tx/',
       'https://testnet.snowtrace.io/tx/',
 

@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false,
+  production: true,
   // TAILWIND_MODE: 'build',
  
   transactionURI: {
@@ -18,7 +18,7 @@ export const environment = {
  
   CONTRACT_ADDRESS: {
     '0x5': {
-      PREMINT:'0x0fB5D4C4C20DF92F1657F97c916D0D51f401343d'
+      PREMINT:'0xB735B490C5A3Fb511451EBE0A29565b27fb521F6'
     },
     '0x61': {
       PREMINT:'0x0fB5D4C4C20DF92F1657F97c916D0D51f401343d'

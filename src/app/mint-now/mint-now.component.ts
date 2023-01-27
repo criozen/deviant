@@ -58,12 +58,12 @@ export class MintNowComponent implements OnInit {
   public buydAmount: any = 0;
   public buygAmount: any = 0;
   public buysAmount: any = 0;
-  public cLimit:any=[0];
-  public ccLimit:any=[]
-  public currentHash:any;
+  public cLimit: any = [0];
+  public ccLimit: any = [];
+  public currentHash: any;
   public joinedAirdrop: boolean = false;
-  public times1:any={}
-  public tx:any
+  public times1: any = {};
+  public tx: any;
   constructor(
     private mintService: MintService,
     private commonContractService: CommonContractService,
@@ -76,46 +76,48 @@ export class MintNowComponent implements OnInit {
         this.isMetamaskConnected = res;
       }
     );
-   
+    if (1674735498 > new Date().getTime() / 1000) {
+      console.log();
+      alert('gain');
+    }
 
     this.commonContractService.accountObservable.subscribe(async (res: any) => {
       if (res) {
         this.account = await res;
-        this.getTier()
-        this.countDown()
-        let countOfUser = await this.mintService.count(this.account.walletAddress) 
-        if(countOfUser ==0){
-          this.dLimit=1
-          this.gLimit=1
-          this.sLimit=0
-        }else if(countOfUser==1){
-          this.dLimit=0
-          this.gLimit=1
-          this.sLimit=0
-        }
-        else if(countOfUser==2){
-          this.dLimit=0
-          this.gLimit=0
-          this.sLimit=0
+        this.getTier();
+        this.countDown();
+        let countOfUser = await this.mintService.count(
+          this.account.walletAddress
+        );
+        if (countOfUser == 0) {
+          this.dLimit = 1;
+          this.gLimit = 1;
+          this.sLimit = 0;
+        } else if (countOfUser == 1) {
+          this.dLimit = 0;
+          this.gLimit = 1;
+          this.sLimit = 0;
+        } else if (countOfUser == 2) {
+          this.dLimit = 0;
+          this.gLimit = 0;
+          this.sLimit = 0;
         }
 
-        
         for (let i = 1; i <= this.dLimit; i++) {
           // await this.buydLimit.push(i);
-          await this.cLimit.push('diamond')
+          await this.cLimit.push('diamond');
         }
         for (let i = 1; i <= this.gLimit; i++) {
           // await this.buygLimit.push(i);
-          await this.cLimit.push('gold')
+          await this.cLimit.push('gold');
         }
         for (let i = 1; i <= this.sLimit; i++) {
           // await this.buysLimit.push(i);
-          this.cLimit.push('silver')
+          this.cLimit.push('silver');
         }
 
-        console.log(this.cLimit)
+        console.log(this.cLimit);
         this.loader = false;
-       
       }
     });
 
@@ -127,42 +129,37 @@ export class MintNowComponent implements OnInit {
   }
 
   async buyNow(event?: any) {
-    this.buydAmount=0
-    this.buygAmount=0
-    
-    console.log('this.amount',this.buyAmount)
-    for (let i=0;i<=this.ccLimit;i++){
-      console.log(this.cLimit[i])
-      if(this.cLimit[i]=='diamond'){
-        this.buydAmount+=1
+    this.buydAmount = 0;
+    this.buygAmount = 0;
+
+    console.log('this.amount', this.buyAmount);
+    for (let i = 0; i <= this.ccLimit; i++) {
+      console.log(this.cLimit[i]);
+      if (this.cLimit[i] == 'diamond') {
+        this.buydAmount += 1;
+      } else if (this.cLimit[i] == 'gold') {
+        this.buygAmount += 1;
       }
-      else if(this.cLimit[i]=='gold'){
-        this.buygAmount+=1
-      }
-     
     }
 
     this.processing = true;
     console.log(this.accessKey);
     this.processing = true;
-    let goldfee = +this.buygAmount * (0.0035 );
+    let goldfee = +this.buygAmount * 0.0035;
     // let silverfee = +this.buysAmount * this.contractDetails.silverRate;
     let currentDiamondBuy = +this.buydAmount;
     let currentGoldBuy = +this.buygAmount;
 
-    let totalfee = goldfee ;
+    let totalfee = goldfee;
     this.finalFee = totalfee;
     this.showFee = totalfee;
     this.currentDiamondBuy = currentDiamondBuy;
     this.currentGoldBuy = currentGoldBuy;
 
-
     this.processing = false;
-
   }
 
   async mintNow() {
- 
     let isDiamondList = false;
     let isGoldList = false;
     let leaf = diamondDb.db.map((x: string) => keccak256(x));
@@ -176,7 +173,7 @@ export class MintNowComponent implements OnInit {
     );
     console.log(index);
 
-    let gleaf =goldDb.db.map((x: string) => keccak256(x));
+    let gleaf = goldDb.db.map((x: string) => keccak256(x));
     let gmerkleTree = new MerkleTree(gleaf, keccak256, { sortPairs: true });
     let gbuf2hex = (x: any) => '0x' + x.toString('hex');
     console.log('gRoot', gbuf2hex(gmerkleTree.getRoot()));
@@ -191,14 +188,12 @@ export class MintNowComponent implements OnInit {
       const _claimingAddress = leaf[index];
       const hexProof = merkleTree.getHexProof(_claimingAddress);
       isDiamondList = merkleTree.verify(hexProof, _claimingAddress, roothash);
-     console.log(hexProof)
+      console.log(hexProof);
       isGoldList = true;
       this.diamondListed = isDiamondList;
       this.goldListed = isGoldList;
       var abi: any = await this.mintService.createAbi(
-        +this.buydAmount +
-        +this.buygAmount +
-        +this.buysAmount,
+        +this.buydAmount + +this.buygAmount + +this.buysAmount,
         hexProof
       );
     } else if (gindex > 0) {
@@ -207,9 +202,7 @@ export class MintNowComponent implements OnInit {
       isGoldList = gmerkleTree.verify(ghexProof, _claimingAddress, groothash);
       this.goldListed = isGoldList;
       var abi: any = await this.mintService.createAbi(
-        +this.buydAmount +
-        +this.buygAmount +
-        +this.buysAmount,
+        +this.buydAmount + +this.buygAmount + +this.buysAmount,
         ghexProof
       );
     } else {
@@ -217,23 +210,20 @@ export class MintNowComponent implements OnInit {
       const shexProof = gmerkleTree.getHexProof(
         '0x173Cb940a1d240fc17bc064b3291d839bf830Be2'
       );
-      
+
       var abi: any = await this.mintService.createAbi(
-        +this.buydAmount +
-        +this.buygAmount +
-        +this.buysAmount,
+        +this.buydAmount + +this.buygAmount + +this.buysAmount,
         shexProof
       );
     }
-    let method =1
-    if(this.commonContractService.isWconnect){
-      method=2
+    let method = 1;
+    if (this.commonContractService.isWconnect) {
+      method = 2;
     }
-    if(method==1){
-      alert('Do not refresh the page while minting')
-    }
-    else{
-      alert('Always open the wallet connect app before minting')
+    if (method == 1) {
+      alert('Do not refresh the page while minting');
+    } else {
+      alert('Always open the wallet connect app before minting');
     }
     this.processing = true;
     console.log(this.accessKey);
@@ -252,11 +242,22 @@ export class MintNowComponent implements OnInit {
         // else this.toastr.error(error.data.message);
         console.log(error.data.message);
       });
-      
+
     if (token) {
-     console.log(this.tx)
-     alert('success')
-     window.location.reload()
+      if (method == 2) {
+        console.log(token.data);
+        this.tx = 'https://goerli.etherscan.io/tx/' + token.data;
+        //  alert('success')
+        this.showModal = true;
+      }
+      if (method == 1) {
+        console.log(token);
+        this.tx =
+          'https://goerli.etherscan.io/tx/' + token.data.transactionHash;
+          this.showModal = true;
+      }
+
+      //  window.location.reload()
     }
     //   let diamondBalance: number =
     //     +this.userDetails.diamondPurchased + +this.currentDiamondBuy;
@@ -269,7 +270,7 @@ export class MintNowComponent implements OnInit {
     //     }else if(method==2){
     //       var transactionHash:any ='https://mumbai.polygonscan.com/tx/' + this.mintService.txHash
     //     }
-      
+
     //   let tier: any = 'Silver User';
     //   if (this.userDetails.goldListed) {
     //     tier = 'Gold User';
@@ -322,7 +323,6 @@ export class MintNowComponent implements OnInit {
     this.chatBotText = '';
   }
 
-
   getTier() {
     let isDiamondList = false;
     let isGoldList = false;
@@ -356,7 +356,6 @@ export class MintNowComponent implements OnInit {
       isGoldList = true;
       this.diamondListed = isDiamondList;
       this.goldListed = isGoldList;
-      
     } else if (gindex > 0) {
       const _claimingAddress = gleaf[gindex];
       const ghexProof = gmerkleTree.getHexProof(_claimingAddress);
@@ -427,4 +426,8 @@ export class MintNowComponent implements OnInit {
     }, 1000);
   }
   async setTime() {}
+  showModal = false;
+  toggleModal() {
+    this.showModal = !this.showModal;
+  }
 }

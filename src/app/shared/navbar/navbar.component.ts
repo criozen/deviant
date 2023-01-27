@@ -1,12 +1,19 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 // import Metamask service on component in which you need
-import { MetaMaskService,StorageService,WalletConnectService } from 'ng-blockchainx';
+import {
+  MetaMaskService,
+  StorageService,
+  WalletConnectService,
+} from 'ng-blockchainx';
 // import { ToastrService } from 'ngx-toastr';
 import { CommonContractService } from '../common-contract.service';
 // add metamask service as DI ( dependency injection )
-import Web3 from "web3";
-import WalletConnectProvider from "@walletconnect/web3-provider";
-
+import Web3 from 'web3';
+import WalletConnectProvider from '@walletconnect/web3-provider';
+// declare var WalletConnect: any;
+declare var WalletConnectQRCodeModal: any;
+import WalletConnect from '@walletconnect/client';
+import QRCodeModal from '@walletconnect/qrcode-modal';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -23,14 +30,14 @@ export class NavbarComponent implements OnInit {
   public currentExplorer: any;
   public currentNetworkDetails: any = [];
   public isMetamaskConnected: boolean = false;
-  public isMobileNavExpanded:boolean=false
-  public isScrolled=false
-  public account:any
-  public observable:any
-  public userNativeBalance:any
-  public isWalletConnected=false
-  public iswConnect=false
-  public triggerConnect=false
+  public isMobileNavExpanded: boolean = false;
+  public isScrolled = false;
+  public account: any;
+  public observable: any;
+  public userNativeBalance: any;
+  public isWalletConnected = false;
+  public iswConnect = false;
+  public triggerConnect = false;
   public networkDetails = {
     //do not change the order,double check the network logo  and symbol name,it should match the order
     chainId: ['0x5'],
@@ -45,68 +52,77 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    
-    // this.walletConnect()
+    // // this.walletConnect()
     this.metaMaskService.setSupportedChains(['0x5']);
-   
-   
+
     this.commonContractService.accountObservable.subscribe(
       async (res: string) => {
         if (res) {
           this.account = await res;
           console.log('wallet details', this.account.walletAddress);
-         
         }
       }
     );
-    this.walletConnectService.connectionListener.subscribe((response:any) => {
-      if (response.code == 250700) {
-        this.logout()
-        // this.disconnect(false);
-      } else {
-        if (response.data['account']) {
-          localStorage.setItem('isMetaConnected','false')
-          localStorage.setItem('isW','true')
-          localStorage.setItem('response.account',response.data.account[0])
-          localStorage.setItem('response.chain',response.data.chainId)
-          console.log('chain',response.data.chainId)
-          this.iswConnect=true
-          this.commonContractService.setAccount({
-            walletAddress: response.data.account[0],
-            chainId: response.data.chainId,
-          });
-          this.iswConnect=true
-          this.commonContractService.isWconnect=true
-          window.location.reload()
-          // this.validateAccount(response.data['account'][0]);
-          // this.closeConnectWallet();
-        }
-      }
-    });
+    // this.walletConnectService.connectionListener.subscribe((response:any) => {
+    //   if (response.code == 250700) {
+    //     this.logout()
+    //     // this.disconnect(false);
+    //   } else {
+    //     if (response.data['account']) {
+    //       localStorage.setItem('isMetaConnected','false')
+    //       localStorage.setItem('isW','true')
+    //       localStorage.setItem('response.account',response.data.account[0])
+    //       localStorage.setItem('response.chain',response.data.chainId)
+    //       console.log('chain',response.data.chainId)
+    //       this.iswConnect=true
+    //       this.commonContractService.setAccount({
+    //         walletAddress: response.data.account[0],
+    //         chainId: response.data.chainId,
+    //       });
+    //       this.iswConnect=true
+    //       this.commonContractService.isWconnect=true
+    //       window.location.reload()
+    //       // this.validateAccount(response.data['account'][0]);
+    //       // this.closeConnectWallet();
+    //     }
+    //   }
+    // });
     this.commonContractService.userNativeBalance.subscribe((res: any) => {
       this.userNativeBalance = res;
       console.log('balalalalalla',res)
     });
-    if(localStorage.getItem('isW')=='true'){
-      this.iswConnect=true
-      this.commonContractService.isWconnect=true
-      this.commonContractService.setAccount({
-        walletAddress: localStorage.getItem('response.account'),
-        chainId: localStorage.getItem('chain'),
-      });
-      if(localStorage.getItem('response.chain')!='80001'){
-        // alert('Connect to BSC Mainnet network')
-      }
-    }
+    // if(localStorage.getItem('isW')=='true'){
+    //   this.iswConnect=true
+    //   this.commonContractService.isWconnect=true
+    //   this.commonContractService.setAccount({
+    //     walletAddress: localStorage.getItem('response.account'),
+    //     chainId: localStorage.getItem('chain'),
+    //   });
+    //   if(localStorage.getItem('response.chain')!='80001'){
+    //     // alert('Connect to BSC Mainnet network')
+    //   }
+    // }
 
     let isMetaMaskConnected = localStorage.getItem('isMetaConnected');
     if (this.account != null || isMetaMaskConnected == 'true') {
       this.walletConnection();
     }
+
+    // console.log(localStorage.getItem('walletconnect'))
+    let b: any = localStorage.getItem('walletconnect');
+    b = JSON.parse(b);
+    if(b?.connected){
+      this.commonContractService.setAccount({
+        walletAddress: b.accounts[0],
+        chainId: '0x5',
+      });
+      this.iswConnect = true;
+    }
+  
     
-    console.log(localStorage.getItem('walletconnect'))
- 
+
     
+    //       window.location.reload()
   }
 
   async connectMetaMask() {
@@ -121,7 +137,10 @@ export class NavbarComponent implements OnInit {
       if (connection) {
         this.walletConnection();
         this.isMetaMaskConnected = true;
-        localStorage.setItem('isMetaConnected',JSON.stringify(this.isMetaMaskConnected));
+        localStorage.setItem(
+          'isMetaConnected',
+          JSON.stringify(this.isMetaMaskConnected)
+        );
         window.location.reload();
       }
     } catch (exception) {
@@ -135,7 +154,7 @@ export class NavbarComponent implements OnInit {
         console.log('response code', response);
 
         if (response.code == 250601) {
-          localStorage.setItem('isW','false')
+          localStorage.setItem('isW', 'false');
           console.log('aaaaaaaaaaa', this.isMetaMaskConnected);
           // this.isMetaMaskConnected=true;
           this.setaccount(response.data);
@@ -148,7 +167,7 @@ export class NavbarComponent implements OnInit {
             walletAddress: this.walletAddress,
             chainId: response.data.chainId,
           });
-          this.isWalletConnected=false
+          this.isWalletConnected = false;
         }
 
         if (response.code == 250611) {
@@ -163,7 +182,7 @@ export class NavbarComponent implements OnInit {
         if (response.code == 250610) {
           // chain changed
           console.log(response, 'chain changed');
-          // localStorage.setItem('account', 
+          // localStorage.setItem('account',
           //   [walletAddress: this.walletAddress,
           //   chainId: response.data.chainId,
           //   ]);
@@ -181,14 +200,14 @@ export class NavbarComponent implements OnInit {
         }
         console.log('oninit', response);
         if (response.code == 250641) {
-          alert('Wrong network, Please change to bsc main network')
+          alert('Wrong network, Please change to bsc main network');
           // this.isChooseWrongNetworkShown = true;
         }
       });
   }
 
-  public walletConnect() {
-    this.walletConnectService.openWalletConnectModal();
+  public async walletConnect() {
+    await this.walletConnectService.openWalletConnectModal();
   }
 
   setaccount(account: any) {
@@ -249,7 +268,7 @@ export class NavbarComponent implements OnInit {
     this.storage.remove('connection');
     this.storage.remove('account');
     localStorage.setItem('nativeCurrency', '-');
-    localStorage.setItem('isMetaConnected', "false");
+    localStorage.setItem('isMetaConnected', 'false');
   }
 
   // async changeNetwork(index: any) {
@@ -294,20 +313,95 @@ export class NavbarComponent implements OnInit {
   logout() {
     this.setNativeCurrencyNull();
     this.isMetaMaskConnected = false;
-    localStorage.setItem('isMetaConnected',JSON.stringify(this.isMetaMaskConnected));
-    localStorage.setItem('isW','false');
-    localStorage.removeItem('response.account')
-    localStorage.removeItem('walletconnect')
-    localStorage.removeItem('isMetaConnected')
-    localStorage.removeItem('isW')
-    localStorage.removeItem('response.chain')
+    localStorage.setItem(
+      'isMetaConnected',
+      JSON.stringify(this.isMetaMaskConnected)
+    );
+    localStorage.setItem('isW', 'false');
+    localStorage.removeItem('response.account');
+    localStorage.removeItem('walletconnect');
+    localStorage.removeItem('isMetaConnected');
+    localStorage.removeItem('isW');
+    localStorage.removeItem('response.chain');
     window.location.reload();
+  }
+  async connect() {
+    this.triggerConnect = true;
+  }
+  async closeConnect() {
+    this.triggerConnect = false;
+  }
 
+  _connect() {
+    const connector = new WalletConnect({
+      bridge: 'https://bridge.walletconnect.org',
+      qrcodeModal: QRCodeModal,
+      qrcodeModalOptions: {
+        mobileLinks: ['metamask'],
+      },
+    });
+
+    // Check if connection is already established
+    connector.createSession();
+
+    // Subscribe to connection events
+    connector.on('connect', async (error, payload) => {
+      if (error) {
+        throw error;
+      } else {
+        
+    localStorage.setItem('isMetaConnected', 'false');
+    localStorage.setItem('isW', 'true');
+
+    this.iswConnect = true;
+   
+    this.commonContractService.isWconnect = true;
+        window.location.reload();
+      }
+
+      // Get provided accounts and chainId
+      const { accounts, chainId } = payload.params[0];
+
+      console.log(accounts);
+
+      const msgParams = [
+        accounts[0],
+        `0x${this.toHex('this is the message')}`, // Required
+      ];
+
+      // Sign message
+      await connector
+        .signPersonalMessage(msgParams)
+        .then(async (sig) => {
+          // Returns signature.
+          console.log(sig);
+        })
+        .catch((error) => {
+          // Error returned when rejected
+          console.error(error);
+        });
+    });
+
+    connector.on('session_update', async (error, payload) => {
+      if (error) {
+        throw error;
+      }
+
+      // Get updated accounts and chainId
+      const { accounts, chainId } = payload.params[0];
+    });
+
+    connector.on('disconnect', async (error, payload) => {
+      if (error) {
+        throw error;
+      }
+    });
   }
-  async connect(){
-    this.triggerConnect = true
-  }
-  async closeConnect(){
-    this.triggerConnect=false
+
+  private toHex(stringToConvert: string) {
+    return stringToConvert
+      .split('')
+      .map((c) => c.charCodeAt(0).toString(16).padStart(2, '0'))
+      .join('');
   }
 }
